@@ -5,7 +5,7 @@ The data is provided by the medical segmentation decathlon challenge(http://medi
 
 (Data License: CC-BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/) <br/>
 
-https://github.com/user-attachments/assets/d45db9f9-7b5b-45ae-9bf4-81096e503a00
+![segment-1](images/segmentation-1.gif)
 
 ## Preprocessing
 
@@ -14,7 +14,7 @@ https://github.com/user-attachments/assets/d45db9f9-7b5b-45ae-9bf4-81096e503a00
 3. As we want to tackle this task on a slice level (2D) and not on a subject level (3D) to reduce the computational cost **we should store the preprocessed data as 2d files**, because reading a single slice is much faster than loading the complete NIfTI file.
 4. Resize the single slices and masks to (256, 256) (when resizing the mask, pass interpolation=cv2.INTER_NEAREST to the resize function to apply nearest neighbour interpolation)
 
-![output-1](https://github.com/Gacha76/Lung-Tumor-Segmentation/blob/main/images/output-1.png?raw=true)
+![output-1](images/output-1.png)
 
 ## DataSet Creation
 We need to implement the following functionality:
@@ -24,7 +24,7 @@ We need to implement the following functionality:
 4. Data Augmentation.
 5. Return slice and mask <br/>
 
-![alt text](https://github.com/Gacha76/Lung-Tumor-Segmentation/blob/main/images/output-2.png?raw=true)
+![alt text](images/output-2.png)
 
 ## Model
 then, we will create the model for the atrium segmentation! <br />
@@ -36,7 +36,7 @@ The decoder reconstructs a mask of the input shape over several layers by upsamp
 Additionally skip-connections allow a direct information flow from the encoder to the decoder on all intermediate levels of the UNET.
 This allows for a high quality of the produced mask and simplifies the training process.<br />
 
-![alt text](https://github.com/Gacha76/Lung-Tumor-Segmentation/blob/main/images/unet.png?raw=true)
+![alt text](images/unet.png)
 
 ## Training
 We will implement full segmentaion model with pytorch-lightning.
@@ -49,10 +49,13 @@ To do so we can use the **WeightedRandomSampler** provided by pytorch which need
 ### Loss
 
 As this is a harder task to train you might try different loss functions:
-We achieved best results by using the Binary Cross Entropy instead of the Dice Loss.
+We achieved best results by combining the Binary Cross Entropy and Dice Loss as BCE quickly saturates due to the high class imbalance of a small tumor compared to the background in a given slice.
 
-Computed Dice-score: 1.000
+| **Computed Metrics** | *Dice Score* | *Precision* | *Recall* | *IoU* |
+| --- | --- | --- | --- | --- |
+| **With Early Stopping** | 0.770587 | 0.773336	| 0.767857 | 0.626793
+| **Without Early Stopping** | 0.773342	| 0.735817 | 0.8149	| 0.630446
 
 ## Visualization
 
-https://github.com/user-attachments/assets/8ac0a74f-aa59-4734-8f6c-475cfa767340
+![segment-1](images/segmentation-2.gif)
