@@ -17,14 +17,12 @@ class LungDataset(torch.utils.data.Dataset):
         """
         files = []
 
-        for subject in root.glob("*"):   # Iterate over the subjects
-            slice_path = subject / "data"  # Get the slices for current subject
+        slice_path = root / "data"  # Get the slices for all subjects
 
-            for slice in slice_path.glob("*"):
-                files.append(slice)
+        for slice in slice_path.glob("*"):
+            files.append(slice)
 
         return files
-
 
     @staticmethod
     def change_img_to_label_path(path):
@@ -33,6 +31,7 @@ class LungDataset(torch.utils.data.Dataset):
         """
         parts = list(path.parts)
         parts[parts.index("data")] = "masks"
+        parts[-1] = parts[-1].replace('slice', 'mask')
 
         return Path(*parts)
 

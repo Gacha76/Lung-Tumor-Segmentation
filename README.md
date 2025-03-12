@@ -16,7 +16,7 @@ The data is provided by the medical segmentation decathlon challenge(http://medi
 
 ![output-1](images/output-1.png)
 
-## DataSet Creation
+## Dataset Creation
 We need to implement the following functionality:
 1. Create a list of all 2D slices. To so we need to extract all slices from all subjects
 2. Extract the corresponding label path for each slice path
@@ -27,7 +27,7 @@ We need to implement the following functionality:
 ![alt text](images/output-2.png)
 
 ## Model
-then, we will create the model for the atrium segmentation! <br />
+Then, we will create the model for the atrium segmentation! <br />
 We will use the most famous architecture for this task, the U-NET (https://arxiv.org/abs/1505.04597). <br/>
 
 The idea behind a UNET is the Encoder-Decoder architecture with additional skip-connctions on different levels:
@@ -49,12 +49,13 @@ To do so we can use the **WeightedRandomSampler** provided by pytorch which need
 ### Loss
 
 As this is a harder task to train you might try different loss functions:
-We achieved best results by combining the Binary Cross Entropy and Dice Loss as BCE quickly saturates due to the high class imbalance of a small tumor compared to the background in a given slice.
+We achieved best results by using Binary Cross Entropy Loss instead of the Dice Loss.
 
 | **Computed Metrics** | *Dice Score* | *Precision* | *Recall* | *IoU* |
 | --- | --- | --- | --- | --- |
-| **With Early Stopping** | 0.770587 | 0.773336	| 0.767857 | 0.626793
-| **Without Early Stopping** | 0.773342	| 0.735817 | 0.8149	| 0.630446
+| **Pure Probabilities** | 0.874775 | 0.881955	| 0.867711 | 0.777422
+| **With threshold of 0.5** | 0.905826	| 0.926147 | 0.886377	| 0.827863
+| **With threshold of 0.8** | 0.878511	| 0.973704 | 0.800273	| 0.783343
 
 ## Visualization
 
