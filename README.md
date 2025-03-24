@@ -1,7 +1,7 @@
 ## Introduction
 
 First, we need to obtain and preprocess the data for the segmentation task
-The data is provided by the medical segmentation decathlon challenge(http://medicaldecathlon.com/) <br />
+The data is provided by the [medical segmentation decathlon challenge](http://medicaldecathlon.com/) <br />
 
 (Data License: CC-BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/) <br/>
 
