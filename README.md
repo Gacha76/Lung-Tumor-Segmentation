@@ -9,7 +9,7 @@ The data is provided by the [medical segmentation decathlon challenge](http://me
 
 ## Preprocessing
 
-1. CT images have a fixed range from -1000 to 3071. **Thus we can normalize by dividing by 3071** <br /> we don't need to compute mean and standard deviation for this task
+1. CT images have a fixed range from -1024 to 3071. **Thus we can normalize by dividing by 3071** <br /> we don't need to compute mean and standard deviation for this task
 2. As we want to focus on lung tumors, we can crop away parts of the lower abdomen to reduce the complexity and help the network learn. As an example, **we might skip the first 30 slices (from lower abdomen to the neck)** (last axis)
 3. As we want to tackle this task on a slice level (2D) and not on a subject level (3D) to reduce the computational cost **we should store the preprocessed data as 2d files**, because reading a single slice is much faster than loading the complete NIfTI file.
 4. Resize the single slices and masks to (256, 256) (when resizing the mask, pass interpolation=cv2.INTER_NEAREST to the resize function to apply nearest neighbour interpolation)
